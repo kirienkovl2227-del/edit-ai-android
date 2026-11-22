@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#09090d">
+<title>EDIT AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#09090d;color:white;font-family:Arial,sans-serif;padding:22px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}
+h1{font-size:34px;margin:0;font-weight:900}
+.tag{color:#00df72;background:#07351e;padding:9px 13px;border-radius:20px;font-size:12px}
+.hero{width:100%;height:190px;border-radius:18px;background:linear-gradient(135deg,#171b28,#303b50,#08090d);display:flex;align-items:center;justify-content:center;font-size:65px;margin-bottom:25px}
+h2{font-size:27px;margin:15px 0}
+p{color:#999;line-height:1.5}
+.upload{display:block;background:#25252c;border:2px dashed #555;border-radius:17px;padding:35px 15px;text-align:center;margin:20px 0;cursor:pointer}
+.upload strong{font-size:19px}
+.upload input{display:none}
+video{width:100%;max-height:350px;border-radius:15px;display:none;margin:15px 0;background:#000}
+.styles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+.style{background:#111116;border:1px solid #484850;color:white;border-radius:14px;padding:22px 5px;font-size:16px;font-weight:bold}
+.style.active{border:2px solid #00df72;color:#00df72;background:#102219}
+button{cursor:pointer}
+.create{width:100%;padding:21px;background:white;color:#080808;border:0;border-radius:15px;font-size:20px;font-weight:900;margin-top:12px}
+footer{text-align:center;color:#555;margin-top:35px;font-size:12px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>EDIT AI</h1>
+<span class="tag">✦ AI POWERED</span>
+</header>
+
+<div class="hero">🎬</div>
+
+<h2>Create your edit.</h2>
+<p>Загрузи свои видео. Остальное сделает AI.</p>
+
+<label class="upload">
+<div style="font-size:35px">＋</div>
+<strong>ЗАГРУЗИТЬ НАРЕЗКИ</strong>
+<p>MP4, MOV и другие видеоформаты</p>
+<input type="file" id="files" accept="video/*" multiple>
+</label>
+
+<div id="status" style="color:#00df72"></div>
+<video id="preview" controls playsinline></video>
+
+<h3>Выбери стиль</h3>
+<div class="styles">
+<button class="style active" data-style="CINEMATIC">CINEMATIC</button>
+<button class="style" data-style="VELOCITY">VELOCITY</button>
+<button class="style" data-style="DARK">DARK</button>
+<button class="style" data-style="CLEAN">CLEAN</button>
+</div>
+
+<button class="create" id="create">CREATE MY EDIT ✦</button>
+
+<footer>EDIT AI © 2026 · MADE FOR CREATORS</footer>
+
+<script>
+let selectedStyle="CINEMATIC";
+const files=document.getElementById("files");
+const preview=document.getElementById("preview");
+const status=document.getElementById("status");
+
+document.querySelectorAll(".style").forEach(button=>{
+button.addEventListener("click",()=>{
+document.querySelectorAll(".style").forEach(b=>b.classList.remove("active"));
+button.classList.add("active");
+selectedStyle=button.dataset.style;
+});
+});
+
+files.addEventListener("change",()=>{
+if(files.files.length){
+status.textContent="✓ Загружено файлов: "+files.files.length;
+const url=URL.createObjectURL(files.files[0]);
+preview.src=url;
+preview.style.display="block";
+}
+});
+
+document.getElementById("create").addEventListener("click",()=>{
+if(!files.files.length){
+alert("Сначала загрузи видео!");
+return;
+}
+alert("Стиль "+selectedStyle+" выбран! Для автоматического AI-монтажа следующим этапом подключим сервер обработки видео.");
+});
+</script>
+</body>
+</html>
